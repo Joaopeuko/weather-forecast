@@ -15,6 +15,18 @@ class OpenWeather:
         load_dotenv()
         self.API_KEY = os.environ.get("API_KEY")
 
+    def get_city_information(self, city):
+        """
+        :param city: str
+            The city to the desired temperature.
+        :return: float
+             It returns the Celsius temperature.
+        """
+        request_link = f'http://api.openweathermap.org/data/2.5/' \
+                       f'weather?q={city}&appid={self.API_KEY}&units=metric'
+
+        return requests.get(request_link).json()
+
     def get_city_temperature(self, city):
         """
         :param city: str
@@ -40,7 +52,7 @@ class OpenWeather:
 
         return requests.get(request_link).json()[0]['name']
 
-    def get_temperature_by_geolocation(self):
+    def get_weather_by_geolocation(self):
         """
         It uses the function get_city_by_geolocation() to automatically return a dictionary containing city and
         temperature in Celsius
@@ -48,5 +60,29 @@ class OpenWeather:
             It returns a dictionary containing city and
             temperature in Celsius
         """
+
         city = self.get_city_by_geolocation()
-        return {city: self.get_city_temperature(city)}
+        city_information = self.get_city_information(city)
+
+        temperature = city_information['main']['temp']
+        weather_status = city_information['weather'][0]['main']
+        return {'city': city, 'weather': weather_status, 'temperature': temperature}
+
+    def get_weather_by_city(self, city):
+        """
+        :param city: str
+            It uses the city to return the weather of desired location.
+        :return: float
+             It returns the weather, like if is sunny or raining.
+        """
+        city_information = self.get_city_information(city)
+
+        temperature = city_information['main']['temp']
+        weather_status = city_information['weather'][0]['main']
+        return {'city': city, 'weather': weather_status, 'temperature': temperature}
+
+
+if __name__ == '__main__':
+    weather = OpenWeather()
+
+    print(weather.get_weather_by_geolocation())
