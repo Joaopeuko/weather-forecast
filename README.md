@@ -4,7 +4,7 @@
    - [About](#about)
    - [Installation](#installation) 
      - How to use
-   - [To Do](#to_do)
+   - [To Do](#road-map)
 
 
 ### About
@@ -16,7 +16,12 @@
 pip install -r requirements.txt
 ```
 
-### To Do
-- [X] Open Weather API-KEY
-- [X] DotEnv
-- 
+### Road Map
+- [X] ~~Open Weather API-KEY~~
+- [X] ~~DotEnv~~
+- [ ] Documentation
+- [ ] Back-End
+  - [ ] Flask Api
+    - [ ] Cache Data
+- [ ] Front-End
+- [ ] Test
