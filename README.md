@@ -8,7 +8,7 @@
 
 
 ### About
-
+DotEnv used to hide my API_KEY
 
 ### Installation
 
