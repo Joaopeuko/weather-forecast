@@ -1,9 +1,10 @@
 from flask import Flask, request
 from lib.openweather import OpenWeather
 
+COOKIE_EXPIRATION_TIME = 5  # minutes
+
 app = Flask(__name__)
 weather = OpenWeather()
-
 
 @app.route('/weather/<city_name>')
 def results(city_name):
@@ -14,11 +15,11 @@ def results(city_name):
 @app.route('/weather', methods=['GET'])
 def max_values():
     default = 5
-    print(len(request.args))
     if not request.args or not request.args['max'].isnumeric():
         return str(default)
     else:
-        return request.args['max']
+        result = request.args['max']
+        return result
 
 
 if __name__ == '__main__':

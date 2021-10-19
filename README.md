@@ -8,7 +8,9 @@
 
 
 ### About
-DotEnv used to hide my API_KEY
+DotEnv is used to hide my API_KEY
+
+The cache information that live for 5 minutes uses Cookie  at the front end.
 
 ### Installation
 
