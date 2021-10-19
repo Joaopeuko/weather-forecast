@@ -10,6 +10,7 @@ import requests
 import pandas as pd
 
 SERVER_URL = 'http://127.0.0.1:5000'
+COOKIE_EXPIRATION_TIME = 15
 
 st.set_page_config(layout="wide")
 
@@ -26,7 +27,7 @@ if len(city) == 0:
 
 else:
     request_link = f'{SERVER_URL}/weather/{city.lower()}'
-    row_result = row_creator(3)
+    # row_result = row_creator(len(cookie_list)) if cookie_list is not None else row_creator(0)
     result = requests.get(request_link).json()
 
     if result is not None:
@@ -42,14 +43,18 @@ else:
             cookie_list.append(result)
 
         cookie_manager.set('WeatherCookie', list(cookie_list),
-                           expires_at=datetime.datetime(year=datetime.datetime.now().year,
-                                                        month=datetime.datetime.now().month,
-                                                        day=datetime.datetime.now().day,
-                                                        minute=datetime.datetime.now().minute + 5))
+                           expires_at=(datetime.datetime.now() + datetime.timedelta(minutes=COOKIE_EXPIRATION_TIME)))
 
-        for last_weather in reversed(range(len(cookie_list))):
-            st.markdown('## {} \n '
-                        '### {} C° \n '
-                        '#### {}'.format(str(cookie_list[last_weather]["city"]).title(),
-                                         cookie_list[last_weather]["temperature"],
-                                         cookie_list[last_weather]["weather"]))
+        row_result = row_creator(len(cookie_list))
+
+        for index, reversed_index in enumerate(reversed(range(len(cookie_list)))):
+            row_result[index].markdown('## {} \n '
+                                       '### {} C° \n '
+                                       '#### {}'.format(str(cookie_list[reversed_index]["city"]).title(),
+                                                        cookie_list[reversed_index]["temperature"],
+                                                        cookie_list[reversed_index]["weather"]))
+            # st.markdown('## {} \n '
+            #             '### {} C° \n '
+            #             '#### {}'.format(str(cookie_list[index]["city"]).title(),
+            #                              cookie_list[index]["temperature"],
+            #                              cookie_list[index]["weather"]))
