@@ -1,7 +1,8 @@
 import json
-from flask import Flask, request
+from flask import Flask, request, abort
 from lib.openweather import OpenWeather
 from flask_caching import Cache
+from flask import Response
 
 config = {
     "DEBUG": True,  # some Flask specific configs
@@ -21,6 +22,10 @@ weather = OpenWeather()
 @cache.cached()
 def results(city_name):
     result = weather.get_weather_by_city(city_name)
+
+    if result['city'] == 'city_name_invalid':
+        abort(404)
+
     return result
 
 
@@ -33,6 +38,7 @@ def max_values():
 
     result = []
     for k in reversed(list(cache.cache._cache.keys())[-max_number:]):
+        print(cache.get(k))
         result.append(cache.get(k))
     return json.dumps(result)
 
