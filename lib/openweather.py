@@ -76,7 +76,7 @@ class OpenWeather:
         """
         city_information = self.get_city_information(city)
         if city_information['cod'] == '404':
-            return {'city': 'city_name_invalid', 'weather': 'invalid', 'temperature': 'invalid'}
+            return {'city': 'city_name_invalid', 'weather': 'single_result', 'temperature': 'single_result'}
         else:
             temperature = city_information['main']['temp']
             weather_status = city_information['weather'][0]['main']

@@ -9,6 +9,7 @@ from collections import deque
 import requests
 import pandas as pd
 
+from lib.dashboard.utilities import last_search_display, set_cookie, single_display
 
 SERVER_URL = 'http://127.0.0.1:5000'
 COOKIE_EXPIRATION_TIME = 5  # minutes
@@ -26,7 +27,7 @@ city = row_input[1].text_input("Type the City you want to know the weather!")  #
 
 row_buttons = row_creator(3)
 last_button = row_creator(24)
-button_position = 11
+button_position = 11  # For style porpoise
 last_button[button_position + 1].write('Display: ')
 button_3 = last_button[button_position + 2].button('3')
 button_5 = last_button[button_position + 3].button('5')
@@ -69,6 +70,12 @@ if MAX_NUMBER_COOKIE is None:
 else:
     max_number = MAX_NUMBER_COOKIE
 
+single_result = row_creator(7)
+row_result = row_creator(max_number)
+
+last_search_display(max_number, row_result)  # It returns all the information with max set by user,
+# max default is 5.
+
 if len(city) == 0:
     pass
 
@@ -78,54 +85,13 @@ else:
 
     if result is not None:
         if result['city'] == 'city_name_invalid':
-            invalid = row_creator(3)
-            invalid[1].write("Sorry. We couldn't find specified city.")
 
-            cookie_list = deque(maxlen=max_number)
-
-            cookie_manager_list = cookie_manager.get('WeatherCookie')
-            if cookie_manager_list is not None:
-                for cookie in cookie_manager_list:
-                    cookie_list.append(cookie)
-
-                if result['city'] not in pd.DataFrame(cookie_manager_list)['city'].values:
-                    cookie_list.append(result)
-
-            cookie_manager.set('WeatherCookie', list(cookie_list),
-                               expires_at=(datetime.datetime.now() +
-                                           datetime.timedelta(minutes=COOKIE_EXPIRATION_TIME)), key='2')
-
-            row_result = row_creator(len(cookie_list))
-
-            for index, reversed_index in enumerate(reversed(range(len(cookie_list)))):
-                row_result[index].markdown('## {} \n '
-                                           '### {} C° \n '
-                                           '#### {}'.format(str(cookie_list[reversed_index]["city"]).title(),
-                                                            cookie_list[reversed_index]["temperature"],
-                                                            cookie_list[reversed_index]["weather"]))
+            single_result[3].write("Sorry. We couldn't find specified city.")
+            last_search_display(max_number, row_result)  # It returns all the information with max set by user,
+            # max default is 5.
 
         else:
-            cookie_list = deque(maxlen=max_number)
-
-            cookie_manager_list = cookie_manager.get('WeatherCookie')
-            if cookie_manager_list is not None:
-                for cookie in cookie_manager_list:
-                    cookie_list.append(cookie)
-
-                if result['city'] not in pd.DataFrame(cookie_manager_list)['city'].values:
-                    cookie_list.append(result)
-            else:
-                cookie_list.append(result)
-
-            cookie_manager.set('WeatherCookie', list(cookie_list),
-                               expires_at=(datetime.datetime.now() +
-                                           datetime.timedelta(minutes=COOKIE_EXPIRATION_TIME)), key='2')
-
-            row_result = row_creator(len(cookie_list))
-
-            for index, reversed_index in enumerate(reversed(range(len(cookie_list)))):
-                row_result[index].markdown('## {} \n '
-                                           '### {} C° \n '
-                                           '#### {}'.format(str(cookie_list[reversed_index]["city"]).title(),
-                                                            cookie_list[reversed_index]["temperature"],
-                                                            cookie_list[reversed_index]["weather"]))
+            set_cookie(result, max_number)  # It saves the new valid information
+            single_display(result, single_result)  # It returns the last searched information
+            last_search_display(max_number, row_result)  # It returns all the information with max set by user,
+            # max default is 5.
