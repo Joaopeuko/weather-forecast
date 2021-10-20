@@ -95,7 +95,7 @@ else:
 
     # If the result is not a city it displays an error message.
     if result.status_code == 404:
-        single_result[0].write("<font color='red'> Sorry. We couldn't find specified city. </font >",
+        single_result[0].write("<font color='red'> Sorry. We couldn't find the specified city. </font >",
                                unsafe_allow_html=True)
 
     else:
