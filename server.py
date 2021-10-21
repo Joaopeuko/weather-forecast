@@ -6,7 +6,7 @@ from lib.openweather import OpenWeather
 config = {
     "DEBUG": True,  # Some Flask-specific configurations..
     "CACHE_TYPE": "SimpleCache",  # Flask-Caching related configuration.
-    "CACHE_DEFAULT_TIMEOUT": 5 * 60  # Time, 60 seconds time 5.
+    "CACHE_DEFAULT_TIMEOUT": 5 * 60  # Time, 60 seconds times 5.
 }
 app = Flask(__name__)  # It creates the Flask App
 
