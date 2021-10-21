@@ -31,10 +31,10 @@ pip install -r requirements.txt
 
 In requirements.txt you can find the following library's:
 ```python
-requests~=2.26.0
-python-dotenv~=0.19.1
-streamlit~=1.0.0
-Flask~=2.0.2
+requests
+python-dotenv
+streamlit
+Flask
 coverage
 ```
 - requests~=2.26.0
