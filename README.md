@@ -105,6 +105,6 @@ It is possible to see the HTML report [here](https://htmlpreview.github.io/?http
 
 ### License
 
-MIT License
+[MIT License](https://github.com/Joaopeuko/weather-forecast/blob/master/LICENSE)
 
 ---
