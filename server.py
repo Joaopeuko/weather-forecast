@@ -33,7 +33,7 @@ def results(city_name):
     """
     result = weather.get_weather_by_city(city_name)
 
-    if result['city'] == 'city_name_invalid':
+    if result['city'] == 'city_name_invalid' or str(city_name).isnumeric():
         abort(404)  # In case the city name is invalid it returns an error 404.
 
     return result
@@ -47,7 +47,8 @@ def max_values():
     :return: json
         It returns a JSON that contains a dictionary about the last results.
     """
-    if request.args and request.args['max'].isnumeric():
+
+    if 'max' in list(request.args.keys()) and request.args['max'].isnumeric():
         max_number = int(request.args['max'])  # It returns the new amount of information the users requested.
     else:
         max_number = 5  # The default amount of data returned.
