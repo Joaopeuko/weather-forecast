@@ -98,6 +98,6 @@ coverage html  # To generate the report in HTML
 | server_test.py    |       88    |  0   |   100% |         |
 | TOTAL             |       88    |  0   |    100%|         |
 
-It is possible to see the HTML report [here](). You can click on server_test.py for more information.
+It is possible to see the HTML report [here](https://htmlpreview.github.io/?https://github.com/Joaopeuko/weather-forecast/blob/master/test/htmlcov/index.html). You can click on server_test.py for more information.
 
 ---
