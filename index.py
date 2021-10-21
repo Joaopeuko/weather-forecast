@@ -2,6 +2,9 @@ import streamlit as st
 import requests
 
 
+SERVER_URL = 'http://127.0.0.1:5000'  # The server address in localhost.
+
+
 def row_creator(columns_numbers):
     """
     It creates the X amount of columns that one wants to have in a row.
@@ -54,9 +57,6 @@ def cached_display(cached_list, row_result):
     """
     for index, reversed_index in enumerate(reversed(range(len(cached_list)))):
         single_display(cached_list[reversed_index], row_result[index])
-
-
-SERVER_URL = 'http://127.0.0.1:5000'  # The server address in localhost.
 
 # Page layout configuration.
 st.set_page_config(layout="centered")

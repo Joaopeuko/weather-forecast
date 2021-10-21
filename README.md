@@ -10,6 +10,7 @@
      - [Server](#server)
      - [Front end page](#front-end-page)
    - [Test](#test)
+   - [License](#license)
    
 
 
@@ -99,5 +100,11 @@ coverage html  # To generate the report in HTML
 | TOTAL             |       88    |  0   |    100%|         |
 
 It is possible to see the HTML report [here](https://htmlpreview.github.io/?https://github.com/Joaopeuko/weather-forecast/blob/master/test/htmlcov/index.html). You can click on server_test.py for more information.
+
+---
+
+### License
+
+MIT License
 
 ---
